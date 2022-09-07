@@ -1,16 +1,31 @@
 import styled from 'styled-components';
-import { Link, useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
+import { useState } from 'react';
+
+//Ajustar pra ter um scroll quando o array é muito grande
+//Ajustar a entrada pra transformar em formato R$XX,XX conforme vai digitando
+
+import RenderReport from './renderReport';
+import RenderReportSum from './renderReportSum';
+
+const rep = [{date: "30/11/2022", description: "Almoço mãe", value: 39.90, type: "-"}, {date: "27/11/2022", description: "Mercado", value: 542.54, type: "-"}, {date: "26/11/2022", description: "Compras churrasco", value: 67.60, type: "-"}, {date: "20/11/2022", description: "Empréstimo Maria", value: 500, type: "+"}, {date: "15/11/2022", description: "Salário", value: 3000, type: "+"}]
+
+//const rep = [];
 
 export default function Main(){
+
+    const [report, setReport] = useState(rep)
+
     return (
     <Centralize>
         <Title>
             Olá, Fulano
-            <ion-icon name="exit-outline"/>
+            <Link to={"/"}><ion-icon name="exit-outline"/></Link>
         </Title>
-        <Registros>
-        <h1>Não há registros de entrada ou saída</h1>
-        </Registros>
+        <Report>
+            <RenderReport report={report}/>
+            <RenderReportSum report={report}/>
+        </Report>
         <Botoes>
         <Link to={"/addEntrances"}>
             <Botao>
@@ -102,7 +117,7 @@ const Botao = styled.div`
         height: 25px;
     }
 `
-const Registros = styled.div`
+const Report = styled.div`
     width: 326px;
     height: 446px;
     background-color: #FFFFFF;
@@ -111,21 +126,21 @@ const Registros = styled.div`
     margin-top: 22px;
     color: #868686;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
     font-size: 20px;
     font-weight: 400;
-    text-align: center;
     box-sizing: border-box;
     padding: 12px;
+    padding-top: 25px;
     cursor: default;
+    position: relative;
 
-    h1{
+    h6{
         text-align: center;
         width: 200px;
     }
 `
 
 //Falta estilizar o tamanho do ion icon
-//Falta estilizar o tamanho da borda do texto em registros pra ter quebra de linha
+//Falta estilizar o tamanho da borda do texto em Report pra ter quebra de linha
 //Falta estilizar o tamanho do texto nos botões pra ter quebra de linha

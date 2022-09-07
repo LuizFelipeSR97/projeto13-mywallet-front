@@ -1,16 +1,37 @@
 import styled from 'styled-components';
 import { Link, useNavigate } from "react-router-dom";
+//import axios from 'axios';
 
 export default function SignIn(){
+
+    const navigate = useNavigate();
+
+    function enviarFormulario(e){
+        e.preventDefault();
+        const user = {email: e.target.email.value, password: e.target.password.value};
+
+        console.log(user);
+        navigate("/main");
+
+        //Quando tiver pronto, tirar esse navigate de cima e descomentar o axios abaixo
+        
+        //axios.post("http://localhost:5000/myWalletUsers", user).then(() => {
+        //    navigate("/main");
+        //}).catch(err => {
+        //    console.error(err);
+        //    alert("Erro ao fazer login! Consulte os logs.")
+        //})
+    }
+
     return (
     <Centralize>
         <Title>
             MyWallet
         </Title>
-        <Formulario>
+        <Formulario onSubmit={enviarFormulario}>
             <input placeholder="E-mail" type="email" name="email" required>
             </input>
-            <input placeholder="Senha" type="password" name="senha" required>
+            <input placeholder="Senha" type="password" name="password" required>
             </input>
             <Botao>
                 Entrar
