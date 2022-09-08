@@ -1,5 +1,7 @@
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import styled from "styled-components";
+import React from 'react'
+
 import SignIn from './signin';
 import SignUp from './signup';
 import Main from './main';
@@ -7,16 +9,19 @@ import AddEntrances from './addEntrances';
 import AddExits from './addExits';
 
 export default function App () {
+
+    const [user, setUser] = React.useState()
+    const [transactions, setTransactions] = React.useState([])
     
     return (
     <Page>
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<SignIn />} />
+                <Route path="/" element={<SignIn user={user} setUser={setUser}/>} />
                 <Route path="/signup" element={<SignUp />} />
-                <Route path="/main" element={<Main />} />
-                <Route path="/addEntrances" element={<AddEntrances />} />
-                <Route path="/addExits" element={<AddExits />} />
+                <Route path="/main" element={<Main user={user} setUser={setUser} transactions={transactions} setTransactions={setTransactions}/>} />
+                <Route path="/addEntrances" element={<AddEntrances user={user}/>} />
+                <Route path="/addExits" element={<AddExits user={user}/>} />
             </Routes>
         </BrowserRouter>
     </Page>   

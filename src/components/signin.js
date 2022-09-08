@@ -1,26 +1,39 @@
 import styled from 'styled-components';
 import { Link, useNavigate } from "react-router-dom";
-//import axios from 'axios';
+import axios from 'axios';
+import React from 'react';
 
-export default function SignIn(){
+export default function SignIn({user, setUser}){
 
+    console.log("signin")
+
+    //const [a,setA] = React.useState(0);
+    
     const navigate = useNavigate();
 
     function enviarFormulario(e){
+
         e.preventDefault();
-        const user = {email: e.target.email.value, password: e.target.password.value};
 
-        console.log(user);
-        navigate("/main");
-
-        //Quando tiver pronto, tirar esse navigate de cima e descomentar o axios abaixo
+        const inputUser = {email: e.target.email.value, password: e.target.password.value};
         
-        //axios.post("http://localhost:5000/myWalletUsers", user).then(() => {
-        //    navigate("/main");
-        //}).catch(err => {
-        //    console.error(err);
-        //    alert("Erro ao fazer login! Consulte os logs.")
-        //})
+        axios.get("http://localhost:5000/users", inputUser).then(answer => {
+
+            const userVerification = answer.data.find(u=>(u.email===inputUser.email && u.password===inputUser.password))
+            
+            console.log(userVerification);
+            
+            if (userVerification===undefined){
+                alert("E-mail e/ou senha incorretos. Tente novamente!")
+            } else {
+                setUser({...userVerification})
+                navigate("/main")
+            }
+
+        }).catch(err => {
+            console.error(err);
+            alert("Erro ao fazer login! Consulte os logs.")
+        })
     }
 
     return (

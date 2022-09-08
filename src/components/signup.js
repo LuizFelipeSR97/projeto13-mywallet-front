@@ -3,9 +3,10 @@ import { Link, useNavigate} from "react-router-dom";
 
 
 let db_users=[{name: "fulano", email: "fulano@fulano.com", password: "fulano"},{name: "bob", email: "bob@driven.com", password: "bob@driven"}]
-console.log(db_users)
 
-export default function SignIn(){
+export default function SignUp(){
+
+    console.log("signup")
 
     const navigate = useNavigate();
 

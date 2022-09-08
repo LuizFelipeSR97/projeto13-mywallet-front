@@ -1,21 +1,27 @@
 import styled from 'styled-components';
+import axios from 'axios'
 import { Link, useNavigate } from "react-router-dom";
 
-export default function AddEntrances(){
+export default function AddEntrances({user}){
+
+    console.log("addEntrances")
 
     const navigate = useNavigate();
 
     function enviarFormulario(e){
+
         e.preventDefault();
-        const transaction = {description: e.target.description.value, value: e.target.value.value, date: "01/12/22"};
-        navigate("/main");
         
-        //axios.post("http://localhost:5000/myWalletUsers", user).then(() => {
-        //    navigate("/main");
-        //}).catch(err => {
-        //    console.error(err);
-        //    alert("Erro ao fazer login! Consulte os logs.")
-        //})
+        navigate("/main");
+
+        const newTransaction = {idUser: user._id, description: e.target.description.value, value: Number(e.target.value.value), type: "+"}
+
+        axios.post("http://localhost:5000/transactions", newTransaction).then(() => {
+            navigate("/main");
+        }).catch(err => {
+            console.error(err);
+            alert("Erro ao fazer login! Consulte os logs.")
+        })
     }
 
     return (

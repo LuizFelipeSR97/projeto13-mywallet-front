@@ -1,6 +1,7 @@
 import styled from 'styled-components';
+import axios from 'axios';
 import { Link} from "react-router-dom";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 //Ajustar pra ter um scroll quando o array é muito grande
 //Ajustar a entrada pra transformar em formato R$XX,XX conforme vai digitando
@@ -8,18 +9,32 @@ import { useState } from 'react';
 import RenderReport from './renderReport';
 import RenderReportSum from './renderReportSum';
 
-const rep = [{date: "30/11/2022", description: "Almoço mãe", value: 39.90, type: "-"}, {date: "27/11/2022", description: "Mercado", value: 542.54, type: "-"}, {date: "26/11/2022", description: "Compras churrasco", value: 67.60, type: "-"}, {date: "20/11/2022", description: "Empréstimo Maria", value: 500, type: "+"}, {date: "15/11/2022", description: "Salário", value: 3000, type: "+"}]
+export default function Main({user, setUser}){
 
-//const rep = [];
+    console.log("main")
+    console.log(user)
 
-export default function Main(){
+    const userHeader = {headers: {"user": user._id}};
 
-    const [report, setReport] = useState(rep)
+    const [report, setReport] = useState([]);
+
+    useEffect(() => {
+
+        axios.get("http://localhost:5000/transactions", userHeader)
+        .then(ans=> {
+            setReport([...ans.data])
+        })
+        .catch(err => {
+            console.error(err);
+            alert("Erro ao carregar! Consulte os logs.")
+        })
+
+    },[]);
 
     return (
     <Centralize>
         <Title>
-            Olá, Fulano
+            Olá, {user.name}
             <Link to={"/"}><ion-icon name="exit-outline"/></Link>
         </Title>
         <Report>

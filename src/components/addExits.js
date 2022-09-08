@@ -1,12 +1,35 @@
 import styled from 'styled-components';
+import axios from 'axios'
+import { Link, useNavigate } from "react-router-dom";
 
-export default function AddEntrances(){
+export default function AddExits({user}){
+
+    console.log("addExits")
+
+    const navigate = useNavigate();
+
+    function enviarFormulario(e){
+
+        e.preventDefault();
+        
+        navigate("/main");
+
+        const newTransaction = {idUser: user._id, description: e.target.description.value, value: Number(e.target.value.value), type: "-"}
+
+        axios.post("http://localhost:5000/transactions", newTransaction).then(() => {
+            navigate("/main");
+        }).catch(err => {
+            console.error(err);
+            alert("Erro ao fazer login! Consulte os logs.")
+        })
+    }
+
     return (
     <Centralize>
         <Title>
             Nova saída
         </Title>
-        <Formulario>
+        <Formulario onSubmit={enviarFormulario}>
             <input placeholder="Valor" type="number" name="value" required/>
             <input placeholder="Descrição" type="text" name="description" required/>
             <Botao>
