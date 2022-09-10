@@ -1,8 +1,7 @@
 import styled from 'styled-components';
-import { Link, useNavigate} from "react-router-dom";
-
-
-let db_users=[{name: "fulano", email: "fulano@fulano.com", password: "fulano"},{name: "bob", email: "bob@driven.com", password: "bob@driven"}]
+import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios';
+import React from 'react';
 
 export default function SignUp(){
 
@@ -13,23 +12,32 @@ export default function SignUp(){
     function enviarFormulario(e){
 
         e.preventDefault();
-        if (e.target.passwordVerification.value !== e.target.password.value){
-            alert ("erro")
-            return
-        }
-        const user = {name: e.target.name.value, email: e.target.email.value, password: e.target.password.value};
-        db_users.push(user);
-        console.log(db_users);
-        navigate("/");
 
-        //Quando tiver pronto, tirar esse push e o navigate de cima e descomentar o axios abaixo
-        
-        //axios.post("http://localhost:5000/myWalletUsers", user).then(() => {
-        //    navigate("/main");
-        //}).catch(err => {
-        //    console.error(err);
-        //    alert("Erro ao fazer login! Consulte os logs.")
-        //})
+        const user = {name: e.target.name.value, email: e.target.email.value, password: e.target.password.value};
+
+        axios.get("http://localhost:5000/users").then(answer => {
+
+            const userVerification = answer.data.find(u=>(u.email===user.email))
+            
+            if (userVerification!==undefined){
+
+                alert("O usuário que você está tentando criar já existe. Por favor, crie um novo usuário ou utilize esse mesmo e-mail para fazer login.")
+
+            } else {
+
+                axios.post("http://localhost:5000/users", user).then(() => {
+                    navigate("/");
+                }).catch(err => {
+                    console.error(err);
+                    alert("Erro ao fazer login! Consulte os logs.")
+                })
+            }
+
+        }).catch(err => {
+            console.error(err);
+            alert("Erro ao fazer login! Consulte os logs.")
+        })
+
     }
 
     return (

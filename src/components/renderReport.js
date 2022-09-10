@@ -57,6 +57,7 @@ margin-bottom: 20px;
 h1{
     text-align: left;
     width: 70px;
+    margin-right: 5px;
     font-size: 16px;
     color: #C6C6C6;
 }
