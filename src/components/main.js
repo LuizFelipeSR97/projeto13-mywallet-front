@@ -1,28 +1,23 @@
 import styled from 'styled-components';
 import axios from 'axios';
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState, useEffect } from 'react';
-
-//Ajustar pra ter um scroll quando o array é muito grande
-//Ajustar a entrada pra transformar em formato R$XX,XX conforme vai digitando
 
 import RenderReport from './renderReport';
 import RenderReportSum from './renderReportSum';
 
-export default function Main({user, setUser}){
+export default function Main({token}){
 
     console.log("main")
-    console.log(user)
-
-    const userHeader = {headers: {"user": user._id}};
 
     const [report, setReport] = useState([]);
 
     useEffect(() => {
 
-        axios.get("http://localhost:5000/transactions", userHeader)
+        axios.get("http://localhost:5000/transactions", {"headers": {"token": token} })
         .then(ans=> {
-            setReport([...ans.data])
+            console.log(ans)
+            //setReport([...ans.data])
         })
         .catch(err => {
             console.error(err);
@@ -34,7 +29,8 @@ export default function Main({user, setUser}){
     return (
     <Centralize>
         <Title>
-            Olá, {user.name}
+            {/* Olá, {user.name} */}
+            Olá, Fulano
             <Link to={"/"}><ion-icon name="exit-outline"/></Link>
         </Title>
         <Report>

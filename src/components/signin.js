@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import React from 'react';
 
-export default function SignIn({user, setUser}){
+export default function SignIn({setUser, setToken}){
 
     console.log("signin")
 
@@ -17,22 +17,21 @@ export default function SignIn({user, setUser}){
 
         const inputUser = {email: e.target.email.value, password: e.target.password.value};
         
-        axios.get("http://localhost:5000/users", inputUser).then(answer => {
+        axios.post("http://localhost:5000/user", inputUser).then(answer => {
 
-            const userVerification = answer.data.find(u=>(u.email===inputUser.email && u.password===inputUser.password))
-            
-            console.log(userVerification);
-            
-            if (userVerification===undefined){
-                alert("E-mail e/ou senha incorretos. Tente novamente!")
-            } else {
-                setUser({...userVerification})
-                navigate("/main")
-            }
+        setToken(answer.data);
+
+        navigate("/main");
 
         }).catch(err => {
+
+            if (err.response.status===401){
+                alert("Usuário e/ou senha inválidos. Tente novamente.")
+                return
+            }
             console.error(err);
             alert("Erro ao fazer login! Consulte os logs.")
+            return
         })
     }
 

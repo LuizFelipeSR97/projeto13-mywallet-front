@@ -13,6 +13,11 @@ export default function SignUp(){
 
         e.preventDefault();
 
+        if (e.target.password.value!==e.target.passwordVerification.value){
+            alert ("A senha digitada e a confirmação são diferentes. Tente novamente!")
+            return
+        }
+
         const user = {name: e.target.name.value, email: e.target.email.value, password: e.target.password.value};
 
         axios.get("http://localhost:5000/users").then(answer => {

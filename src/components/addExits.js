@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 export default function AddExits({user}){
 
     console.log("addExits")
+    console.log(user)
 
     const navigate = useNavigate();
 
