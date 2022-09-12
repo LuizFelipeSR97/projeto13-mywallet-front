@@ -9,14 +9,14 @@ export default function RenderReport({report}){
         </ReportDefault>
         )
     } else {
-        return (report.map(transaction=>(transaction.type==="+")?
-        <Transaction>
+        return (report.map((transaction, index)=>(transaction.type==="+")?
+        <Transaction key={index}>
             <h1>{transaction.date.slice(0,5)}</h1>
             <h2>{transaction.description}</h2>
             <h3>{transaction.value.toFixed(2).toString().replace(".",",")}</h3>             
         </Transaction>
         :
-        <Transaction>
+        <Transaction key={index}>
             <h1>{transaction.date.slice(0,5)}</h1>
             <h2>{transaction.description}</h2>
             <h4>{transaction.value.toFixed(2).toString().replace(".",",")}</h4>          

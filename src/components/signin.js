@@ -4,10 +4,6 @@ import axios from 'axios';
 import React from 'react';
 
 export default function SignIn({setUser, setToken}){
-
-    console.log("signin")
-
-    //const [a,setA] = React.useState(0);
     
     const navigate = useNavigate();
 
@@ -17,7 +13,7 @@ export default function SignIn({setUser, setToken}){
 
         const inputUser = {email: e.target.email.value, password: e.target.password.value};
         
-        axios.post("http://localhost:5000/user", inputUser).then(answer => {
+        axios.post("http://localhost:5000/sessions", inputUser).then(answer => {
 
         setToken(answer.data);
 

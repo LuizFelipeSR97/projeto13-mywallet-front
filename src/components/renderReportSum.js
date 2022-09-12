@@ -4,8 +4,6 @@ export default function RenderReportSum({report}){
 
     if (report.length>0){
 
-        console.log(report)
-
         let sum = 0;
 
         for (let i=0; i<report.length; i++){

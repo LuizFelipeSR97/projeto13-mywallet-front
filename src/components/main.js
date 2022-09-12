@@ -1,36 +1,45 @@
 import styled from 'styled-components';
 import axios from 'axios';
-import { Link } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import { useState, useEffect } from 'react';
 
 import RenderReport from './renderReport';
 import RenderReportSum from './renderReportSum';
 
-export default function Main({token}){
+export default function Main({token, user, setUser}){
 
-    console.log("main")
+    const navigate = useNavigate();
 
     const [report, setReport] = useState([]);
 
     useEffect(() => {
 
-        axios.get("http://localhost:5000/transactions", {"headers": {"token": token} })
+        axios.get("http://localhost:5000/sessions")
         .then(ans=> {
-            console.log(ans)
-            //setReport([...ans.data])
+            setUser ({...ans.data})
         })
         .catch(err => {
             console.error(err);
             alert("Erro ao carregar! Consulte os logs.")
+            navigate("/")
         })
 
-    },[]);
+        axios.get("http://localhost:5000/transactions", {"headers": {"token": token} })
+        .then(ans=> {
+            setReport([...ans.data])
+        })
+        .catch(err => {
+            console.error(err);
+            alert("Erro ao carregar! Consulte os logs.")
+            navigate("/")
+        })
+
+    },[token, navigate, setUser]);
 
     return (
     <Centralize>
         <Title>
-            {/* Olá, {user.name} */}
-            Olá, Fulano
+            Olá, {user.name}
             <Link to={"/"}><ion-icon name="exit-outline"/></Link>
         </Title>
         <Report>

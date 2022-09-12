@@ -10,7 +10,7 @@ import AddExits from './addExits';
 
 export default function App () {
 
-    const [user, setUser] = React.useState()
+    const [user, setUser] = React.useState({id: "", name: "", token: ""})
     const [transactions, setTransactions] = React.useState([])
     const [token, setToken] = React.useState()
     

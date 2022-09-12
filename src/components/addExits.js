@@ -1,27 +1,26 @@
 import styled from 'styled-components';
 import axios from 'axios'
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function AddExits({user}){
-
-    console.log("addExits")
-    console.log(user)
 
     const navigate = useNavigate();
 
     function enviarFormulario(e){
 
         e.preventDefault();
-        
-        navigate("/main");
 
-        const newTransaction = {idUser: user._id, description: e.target.description.value, value: Number(e.target.value.value), type: "-"}
+        // Criar um objeto de transacao contendo idUser (passado por params), Description, Value e Type
+
+        const newTransaction = {idUser: user.id, description: e.target.description.value, value: Number(e.target.value.value), type: "-"}
+
+        // Adicionar a transacao na bd
 
         axios.post("http://localhost:5000/transactions", newTransaction).then(() => {
             navigate("/main");
         }).catch(err => {
             console.error(err);
-            alert("Erro ao fazer login! Consulte os logs.")
+            alert("Erro ao adicionar a transação! Consulte os logs.")
         })
     }
 
