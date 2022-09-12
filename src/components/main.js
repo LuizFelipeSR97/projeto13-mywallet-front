@@ -43,8 +43,12 @@ export default function Main({token, user, setUser}){
             <Link to={"/"}><ion-icon name="exit-outline"/></Link>
         </Title>
         <Report>
-            <RenderReport report={report}/>
-            <RenderReportSum report={report}/>
+            <ReportTransactions>
+                <RenderReport report={report}/>
+            </ReportTransactions>
+            <ReportSum>
+                <RenderReportSum report={report}/>
+            </ReportSum>
         </Report>
         <Botoes>
         <Link to={"/addEntrances"}>
@@ -159,6 +163,26 @@ const Report = styled.div`
         text-align: center;
         width: 200px;
     }
+`
+
+const ReportTransactions = styled.div`
+    width: 100%;
+    height: 400px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    padding: 10px;
+    padding-bottom: 0;
+    overflow: auto;
+`
+
+const ReportSum = styled.div`
+    width: 100%;
+    height: 46px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
 `
 
 //Falta estilizar o tamanho do ion icon
