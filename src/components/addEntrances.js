@@ -12,15 +12,15 @@ export default function AddEntrances({user}){
 
         // Criar um objeto de transacao contendo idUser (passado por params), Description, Value e Type
 
-        let value = e.target.value.value;
+        let priceValue = e.target.value.value;
 
-        if (value.includes(",")){
-            value = Number(e.target.value.value.replace(",","."))
+        if (priceValue.includes(",")){
+            priceValue = Number(e.target.value.value.replace(",","."))
         } else {
-            value = Number(value)
+            priceValue = Number(priceValue)
         }
 
-        const newTransaction = {idUser: user.id, description: e.target.description.value, value: value, type: "+"}
+        const newTransaction = {idUser: user.id, description: e.target.description.value, value: priceValue, type: "+"}
 
         // Adicionar a transacao na bd
 

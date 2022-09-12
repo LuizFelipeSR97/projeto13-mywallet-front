@@ -34,7 +34,7 @@ export default function SignUp(){
                     navigate("/");
                 }).catch(err => {
                     console.error(err);
-                    alert("Erro ao fazer login! Consulte os logs.")
+                    alert("Erro ao fazer cadastro! Consulte os logs.")
                 })
             }
 
