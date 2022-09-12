@@ -12,7 +12,15 @@ export default function AddEntrances({user}){
 
         // Criar um objeto de transacao contendo idUser (passado por params), Description, Value e Type
 
-        const newTransaction = {idUser: user.id, description: e.target.description.value, value: Number(e.target.value.value), type: "+"}
+        let value = e.target.value.value;
+
+        if (value.includes(",")){
+            value = Number(e.target.value.value.replace(",","."))
+        } else {
+            value = Number(value)
+        }
+
+        const newTransaction = {idUser: user.id, description: e.target.description.value, value: value, type: "+"}
 
         // Adicionar a transacao na bd
 
@@ -30,7 +38,7 @@ export default function AddEntrances({user}){
             Nova entrada
         </Title>
         <Formulario onSubmit={enviarFormulario}>
-            <input placeholder="Valor" type="number" name="value" required/>
+            <input placeholder="Valor" name="value" required/>
             <input placeholder="Descrição" type="text" name="description" required/>
             <Botao>
                 Salvar entrada
